@@ -1,6 +1,9 @@
 package com.lopic.movies;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,42 +15,63 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
-
-import com.lopic.movies.Data.Preferences;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import com.lopic.movies.utilities.NetworkUtils;
 import com.lopic.movies.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private GridView gridview;
+
+    private TextView mErrorMessageDisplay;
+
+    private ProgressBar mLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gridview = (GridView) findViewById(R.id.gridview);
-        Preferences.setPreferredFilter(true);
+        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
         loadMovieData();
     }
     private void loadMovieData(){
+        showWeatherDataView();
         new FetchMovieData().execute();
     }
+    private void showWeatherDataView(){
+        gridview.setVisibility(View.VISIBLE);
+        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
+    }
+    private void showErrorMessage() {
+        gridview.setVisibility(View.INVISIBLE);
+        mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
 
-    public class FetchMovieData extends AsyncTask<String, Void, String[]> {
+    public class FetchMovieData extends AsyncTask<String, Void, List<Movie>> {
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoadingIndicator.setVisibility(View.VISIBLE);
+        }
 
-            boolean options = Preferences.getPreferredFilter();
+        @Override
+        protected List<Movie> doInBackground(String... params) {
+
+            boolean options = getPreference();
             URL weatherRequestUrl = NetworkUtils.buildUrl(options);
 
             try {
                 String jsonWeatherResponse = NetworkUtils
                         .getResponseFromHttpUrl(weatherRequestUrl);
 
-                String[] simpleJsonWeatherData = OpenWeatherJsonUtils
+                List<Movie> simpleJsonWeatherData = OpenWeatherJsonUtils
                         .getSimpleWeatherStringsFromJson(jsonWeatherResponse);
 
                 return simpleJsonWeatherData;
@@ -59,16 +83,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String[] weatherData) {
+        protected void onPostExecute(final List<Movie> weatherData) {
+            mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (weatherData != null) {
                 gridview.setAdapter(new ImageAdapter(MainActivity.this, weatherData));
                 gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View v,
                                             int position, long id) {
-                        Toast.makeText(MainActivity.this, "" + position,
-                                Toast.LENGTH_SHORT).show();
+                        Intent intentToStartDetailActivity = new Intent(MainActivity.this, DetailActivity.class);
+                        intentToStartDetailActivity.putExtra("movie", weatherData.get(position).getArray());
+                        startActivity(intentToStartDetailActivity);
                     }
                 });
+            }else{
+                showErrorMessage();
             }
         }
     }
@@ -91,12 +119,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case 0:
-                        Preferences.setPreferredFilter(false);
+                        setPreference(false);
+                        gridview.setAdapter(null);
+                        loadMovieData();
                         break;
                     case 1:
-                        Preferences.setPreferredFilter(true);
+                        setPreference(true);
+                        gridview.setAdapter(null);
+                        loadMovieData();
                         break;
                 }
+
             }
         });
         builder.show();
@@ -106,8 +139,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_filter:
                 popup();
-                gridview.setAdapter(null);
-                loadMovieData();
                 return true;
             case  R.id.action_refresh:
                 gridview.setAdapter(null);
@@ -117,6 +148,20 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void setPreference(boolean b){
+        SharedPreferences sharedPref = getSharedPreferences("MoviesApp", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("SortBy", b);
+        editor.apply();
+    }
+
+    private boolean getPreference(){
+        SharedPreferences sharedPref = getSharedPreferences("MoviesApp", Context.MODE_PRIVATE);
+
+        return sharedPref.getBoolean("SortBy",true);
     }
 }
 

@@ -8,16 +8,18 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
-    private String[] mPosters;
-    public ImageAdapter(Context c, String[] p) {
+    private List<Movie> mMovie;
+    public ImageAdapter(Context c, List<Movie> m) {
         mContext = c;
-        mPosters = p;
+        mMovie = m;
     }
 
     public int getCount() {
-        return mPosters.length;
+        return mMovie.size();
     }
 
     public Object getItem(int position) {
@@ -39,7 +41,7 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        Picasso.with(mContext).load(mPosters[position]).into(imageView);
+        Picasso.with(mContext).load(mMovie.get(position).getPoster()).into(imageView);
         return imageView;
     }
 
