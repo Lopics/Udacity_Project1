@@ -2,5 +2,9 @@
     {
         "merged": "C:\\Users\\Main\\Documents\\Android_Projects\\Movies\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu.xml",
         "source": "C:\\Users\\Main\\Documents\\Android_Projects\\Movies\\app\\src\\main\\res\\menu\\menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Main\\Desktop\\Udacity_Project1-master\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu.xml",
+        "source": "C:\\Users\\Main\\Desktop\\Udacity_Project1-master\\app\\src\\main\\res\\menu\\menu.xml"
     }
 ]

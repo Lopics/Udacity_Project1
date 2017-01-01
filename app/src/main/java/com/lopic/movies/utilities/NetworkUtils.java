@@ -16,7 +16,7 @@ public final class NetworkUtils {
     private static final String POPULAR_BASE_URL =
             "https://api.themoviedb.org/3/movie/popular";
     private static String BASE_URL;
-    private static final String API_KEY = "YOUR_API_KEY";
+    private static final String API_KEY = "Your_API_KEY";
     private static final String API_PARAM = "api_key";
 
     public static URL buildUrl(boolean URL) {

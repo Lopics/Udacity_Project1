@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\Main\\Desktop\\Udacity_Project1-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi\\ic_launcher.png",
+        "source": "C:\\Users\\Main\\Desktop\\Udacity_Project1-master\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
         "merged": "C:\\Users\\Main\\Documents\\Android_Projects\\Movies\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi\\ic_launcher.png",
         "source": "C:\\Users\\Main\\Documents\\Android_Projects\\Movies\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
     }

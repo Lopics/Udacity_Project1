@@ -5,7 +5,7 @@
     density="xxhdpi"
     format="8"
     plugin-version="2.2.3"
-    timestamp="209732987454241"
+    timestamp="252908555241783"
     token="5123327713981655895"
     verifier="COLD_SWAP_REQUESTED" >
 
@@ -22,15 +22,23 @@
         name="verifier"
         duration="0" />
 
+    <artifact
+        location="C:\Users\Main\Desktop\Udacity_Project1-master\app\build\intermediates\instant-run-resources\resources-debug.ir.ap_"
+        type="RESOURCES" />
+
     <build
-        timestamp="209620402880997"
-        verifier="BINARY_MANIFEST_FILE_CHANGE" >
+        timestamp="252821972443654"
+        verifier="FULL_BUILD_REQUESTED" >
         <artifact
-            location="C:\Users\Main\Documents\Android_Projects\Movies\app\build\outputs\apk\app-debug.apk"
+            location="C:\Users\Main\Desktop\Udacity_Project1-master\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
     </build>
     <build
-        timestamp="209732987454241"
-        verifier="COLD_SWAP_REQUESTED" />
+        timestamp="252908555241783"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="C:\Users\Main\Desktop\Udacity_Project1-master\app\build\intermediates\instant-run-resources\resources-debug.ir.ap_"
+            type="RESOURCES" />
+    </build>
 
 </instant-run>
