@@ -13,6 +13,7 @@ import java.util.List;
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     private List<Movie> mMovie;
+
     public ImageAdapter(Context c, List<Movie> m) {
         mContext = c;
         mMovie = m;

@@ -1,6 +1,7 @@
 package com.lopic.movies.utilities;
 
 import android.net.Uri;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -9,8 +10,6 @@ import java.net.URL;
 import java.util.Scanner;
 
 public final class NetworkUtils {
-
-    private static final String TAG = NetworkUtils.class.getSimpleName();
 
     private static final String RATED_BASE_URL =
             "https://api.themoviedb.org/3/movie/top_rated";
@@ -21,13 +20,13 @@ public final class NetworkUtils {
     private static final String API_PARAM = "api_key";
 
     public static URL buildUrl(boolean URL) {
-        if(URL == true){
+        if (URL == true) {
             BASE_URL = RATED_BASE_URL;
-        }else {
+        } else {
             BASE_URL = POPULAR_BASE_URL;
         }
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                .appendQueryParameter(API_PARAM,API_KEY)
+                .appendQueryParameter(API_PARAM, API_KEY)
                 .build();
 
         URL url = null;
@@ -36,7 +35,6 @@ public final class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
 
 
         return url;

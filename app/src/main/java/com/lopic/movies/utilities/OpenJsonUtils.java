@@ -1,4 +1,5 @@
 package com.lopic.movies.utilities;
+
 import com.lopic.movies.Movie;
 
 import org.json.JSONArray;
@@ -46,7 +47,6 @@ public final class OpenJsonUtils {
         JSONArray Array = Json.getJSONArray(OWM_LIST);
 
 
-
         for (int i = 0; i < Array.length(); i++) {
             String original_title;
             String poster;
@@ -59,7 +59,7 @@ public final class OpenJsonUtils {
             overview = data_movie.getString(OWM_OV);
             vote_average = data_movie.getString(OWM_VA);
             release_date = data_movie.getString(OWM_RD);
-            movies.add(new Movie(original_title,poster,overview,vote_average,release_date));
+            movies.add(new Movie(original_title, poster, overview, vote_average, release_date));
         }
 
         return movies;

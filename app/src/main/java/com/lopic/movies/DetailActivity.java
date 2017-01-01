@@ -16,6 +16,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView mRelease_Date;
     TextView mVote_AVG;
     ImageView mImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,7 @@ public class DetailActivity extends AppCompatActivity {
                 mTitle.setText(movie[0]);
                 Picasso.with(getApplicationContext()).load(movie[1]).into(mImageView);
                 mOverview.setText(movie[2]);
-                mVote_AVG.setText(movie[3]+" / 10");
+                mVote_AVG.setText(movie[3] + " / 10");
                 mRelease_Date.setText(movie[4]);
             }
         }

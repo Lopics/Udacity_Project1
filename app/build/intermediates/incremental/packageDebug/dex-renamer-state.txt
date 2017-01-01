@@ -1,0 +1,7 @@
+#Sat Dec 31 21:17:08 EST 2016
+base.0=C\:\\Users\\Main\\Documents\\Android_Projects\\Movies\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_d409bde93733863ee1e837b9b36258da25ec91eb
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=C\:\\Users\\Main\\Documents\\Android_Projects\\Movies\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_6cc0f2624dabcd59747898880bcde1268eea7b6a\\classes.dex
+base.1=C\:\\Users\\Main\\Documents\\Android_Projects\\Movies\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_6cc0f2624dabcd59747898880bcde1268eea7b6a
+file.0=C\:\\Users\\Main\\Documents\\Android_Projects\\Movies\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_d409bde93733863ee1e837b9b36258da25ec91eb\\classes.dex

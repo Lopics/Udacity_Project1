@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.lopic.movies.utilities.NetworkUtils;
 import com.lopic.movies.utilities.OpenJsonUtils;
 
@@ -39,14 +40,17 @@ public class MainActivity extends AppCompatActivity {
         gridview = (GridView) findViewById(R.id.gridview);
         loadMovieData();
     }
-    private void loadMovieData(){
+
+    private void loadMovieData() {
         showDataView();
         new FetchMovieData().execute();
     }
-    private void showDataView(){
+
+    private void showDataView() {
         gridview.setVisibility(View.VISIBLE);
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
     }
+
     private void showErrorMessage() {
         gridview.setVisibility(View.INVISIBLE);
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
@@ -84,10 +88,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Movie> results) {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
-            ImageDisplay(results);
+            imageDisplay(results);
         }
     }
-    private void ImageDisplay( final List<Movie> results){
+
+    private void imageDisplay(final List<Movie> results) {
         if (results != null) {
             gridview.setAdapter(new ImageAdapter(MainActivity.this, results));
             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -98,21 +103,21 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intentToStartDetailActivity);
                 }
             });
-        }else{
+        } else {
             showErrorMessage();
         }
     }
 
-    private void popup(){
-        CharSequence colors[] = new CharSequence[] {"Most Popular", "Top Rated"};
+    private void popup() {
+        CharSequence colors[] = new CharSequence[]{"Most Popular", "Top Rated"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Sort By");
         builder.setItems(colors, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(which == 0){
+                if (which == 0) {
                     setPreference(false);
-                }else if(which == 1){
+                } else if (which == 1) {
                     setPreference(true);
                 }
                 loadMovieData();
@@ -120,19 +125,21 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_filter:
                 popup();
                 return true;
-            case  R.id.action_refresh:
+            case R.id.action_refresh:
                 loadMovieData();
                 return true;
             default:
@@ -141,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setPreference(boolean b){
+    private void setPreference(boolean b) {
         SharedPreferences sharedPref = getSharedPreferences("MoviesApp", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -149,10 +156,10 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private boolean getPreference(){
+    private boolean getPreference() {
         SharedPreferences sharedPref = getSharedPreferences("MoviesApp", Context.MODE_PRIVATE);
 
-        return sharedPref.getBoolean("SortBy",true);
+        return sharedPref.getBoolean("SortBy", true);
     }
 }
 

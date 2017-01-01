@@ -8,7 +8,7 @@ public class Movie {
     private String vote_average;
     private String release_date;
 
-    public Movie(String or, String p, String ov, String v, String r){
+    public Movie(String or, String p, String ov, String v, String r) {
         original_title = or;
         poster = p;
         overview = ov;
@@ -37,7 +37,7 @@ public class Movie {
         return release_date;
     }
 
-    public  String[] getArray(){
+    public String[] getArray() {
         String[] a = {original_title, poster, overview, vote_average, release_date};
         return a;
     }
