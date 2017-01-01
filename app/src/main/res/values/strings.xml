@@ -3,6 +3,15 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_filter">Filter</string>
     <string name="error_message">
-        An error has occurred. Please try again by clicking REFRESH
+        An error has occurred. Please try again by clicking REFRESH and make sure you have an internet connection.
     </string>
+    <string name="Overview">
+        Overview
+    </string>
+    <string name="vote_avg">
+        Vote Average
+    </string>
+<string name="release_date">
+    Release Date
+</string>
 </resources>

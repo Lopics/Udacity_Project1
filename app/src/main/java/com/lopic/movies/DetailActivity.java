@@ -34,7 +34,7 @@ public class DetailActivity extends AppCompatActivity {
             if (intentThatStartedThisActivity.hasExtra("movie")) {
                 String[] movie = intentThatStartedThisActivity.getStringArrayExtra("movie");
                 mTitle.setText(movie[0]);
-                Picasso.with(DetailActivity.this).load(movie[1]).into(mImageView);
+                Picasso.with(getApplicationContext()).load(movie[1]).into(mImageView);
                 mOverview.setText(movie[2]);
                 mVote_AVG.setText(movie[3]+" / 10");
                 mRelease_Date.setText(movie[4]);

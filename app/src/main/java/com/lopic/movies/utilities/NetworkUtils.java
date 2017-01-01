@@ -1,9 +1,6 @@
 package com.lopic.movies.utilities;
 
 import android.net.Uri;
-import android.util.Log;
-import android.util.StringBuilderPrinter;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -20,7 +17,7 @@ public final class NetworkUtils {
     private static final String POPULAR_BASE_URL =
             "https://api.themoviedb.org/3/movie/popular";
     private static String BASE_URL;
-    private static final String API_KEY = "e5eb3c60e02416db4ede9ebb0e9b2906";
+    private static final String API_KEY = "YOUR_API_KEY";
     private static final String API_PARAM = "api_key";
 
     public static URL buildUrl(boolean URL) {

@@ -34,14 +34,13 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {
-            // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
             imageView.setAdjustViewBounds(true);
         } else {
             imageView = (ImageView) convertView;
         }
-
-        Picasso.with(mContext).load(mMovie.get(position).getPoster()).into(imageView);
+        Picasso.with(mContext).setLoggingEnabled(true);
+        Picasso.with(mContext).load(mMovie.get(position).getPoster()).placeholder(R.drawable.placeholder).into(imageView);
         return imageView;
     }
 

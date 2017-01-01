@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Medium"
-                android:text="Overview" />
+                android:text="@string/Overview" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView
-                android:text="Vote Average"
+                android:text="@string/vote_avg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Medium" />
@@ -63,7 +63,7 @@
                 android:id="@+id/vote_avg" />
 
             <TextView
-                android:text="Release Date"
+                android:text="@string/release_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@android:style/TextAppearance.Medium" />

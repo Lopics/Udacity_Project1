@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +17,7 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.lopic.movies.utilities.NetworkUtils;
-import com.lopic.movies.utilities.OpenWeatherJsonUtils;
+import com.lopic.movies.utilities.OpenJsonUtils;
 
 import java.net.URL;
 import java.util.List;
@@ -35,16 +34,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        gridview = (GridView) findViewById(R.id.gridview);
         mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        gridview = (GridView) findViewById(R.id.gridview);
         loadMovieData();
     }
     private void loadMovieData(){
-        showWeatherDataView();
+        showDataView();
         new FetchMovieData().execute();
     }
-    private void showWeatherDataView(){
+    private void showDataView(){
         gridview.setVisibility(View.VISIBLE);
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
     }
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
-    public class FetchMovieData extends AsyncTask<String, Void, List<Movie>> {
+    public class FetchMovieData extends AsyncTask<Void, Void, List<Movie>> {
 
         @Override
         protected void onPreExecute() {
@@ -62,19 +61,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<Movie> doInBackground(String... params) {
+        protected List<Movie> doInBackground(Void... params) {
 
             boolean options = getPreference();
-            URL weatherRequestUrl = NetworkUtils.buildUrl(options);
+            URL RequestUrl = NetworkUtils.buildUrl(options);
 
             try {
-                String jsonWeatherResponse = NetworkUtils
-                        .getResponseFromHttpUrl(weatherRequestUrl);
+                String jsonResponse = NetworkUtils
+                        .getResponseFromHttpUrl(RequestUrl);
 
-                List<Movie> simpleJsonWeatherData = OpenWeatherJsonUtils
-                        .getSimpleWeatherStringsFromJson(jsonWeatherResponse);
+                List<Movie> simpleJsonData = OpenJsonUtils
+                        .getSimpleStringsFromJson(jsonResponse);
 
-                return simpleJsonWeatherData;
+                return simpleJsonData;
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -83,33 +82,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(final List<Movie> weatherData) {
+        protected void onPostExecute(List<Movie> results) {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
-            if (weatherData != null) {
-                gridview.setAdapter(new ImageAdapter(MainActivity.this, weatherData));
-                gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> parent, View v,
-                                            int position, long id) {
-                        Intent intentToStartDetailActivity = new Intent(MainActivity.this, DetailActivity.class);
-                        intentToStartDetailActivity.putExtra("movie", weatherData.get(position).getArray());
-                        startActivity(intentToStartDetailActivity);
-                    }
-                });
-            }else{
-                showErrorMessage();
-            }
+            ImageDisplay(results);
+        }
+    }
+    private void ImageDisplay( final List<Movie> results){
+        if (results != null) {
+            gridview.setAdapter(new ImageAdapter(MainActivity.this, results));
+            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v,
+                                        int position, long id) {
+                    Intent intentToStartDetailActivity = new Intent(MainActivity.this, DetailActivity.class);
+                    intentToStartDetailActivity.putExtra("movie", results.get(position).getArray());
+                    startActivity(intentToStartDetailActivity);
+                }
+            });
+        }else{
+            showErrorMessage();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        /* Use AppCompatActivity's method getMenuInflater to get a handle on the menu inflater */
-        MenuInflater inflater = getMenuInflater();
-        /* Use the inflater's inflate method to inflate our menu layout to this menu */
-        inflater.inflate(R.menu.menu, menu);
-        /* Return true so that the menu is displayed in the Toolbar */
-        return true;
-    }
     private void popup(){
         CharSequence colors[] = new CharSequence[] {"Most Popular", "Top Rated"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -117,22 +110,21 @@ public class MainActivity extends AppCompatActivity {
         builder.setItems(colors, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case 0:
-                        setPreference(false);
-                        gridview.setAdapter(null);
-                        loadMovieData();
-                        break;
-                    case 1:
-                        setPreference(true);
-                        gridview.setAdapter(null);
-                        loadMovieData();
-                        break;
+                if(which == 0){
+                    setPreference(false);
+                }else if(which == 1){
+                    setPreference(true);
                 }
-
+                loadMovieData();
             }
         });
         builder.show();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -141,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 popup();
                 return true;
             case  R.id.action_refresh:
-                gridview.setAdapter(null);
                 loadMovieData();
                 return true;
             default:
